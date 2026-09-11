@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PureFlow — Multilayer Microplastic Filtration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand"><span class="brand-mark"></span>PureFlow</div>
+    <div class="nav-links">
+      <a href="#simulator">Simulator</a>
+      <a href="#layers">Filtration stack</a>
+      <a href="#metrics">Results</a>
+      <a href="#specs">Specifications</a>
+      <a href="#impact">Impact</a>
+    </div>
+    <div class="status-pill"><span class="status-dot" id="navDot"></span><span id="navStatus">Standby</span></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow-row">
+        <span class="chip">Concept demonstrator</span>
+        <span class="chip">7-stage stack</span>
+      </div>
+      <h1>Filtering microplastics, layer by layer.</h1>
+      <p class="lede">PureFlow is a proposed multilayer filtration cartridge built to reduce microplastic particles in drinking water. This page walks through the concept and simulates how each stage contributes to the target removal rate.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('simulator').scrollIntoView()">Run the simulation</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('layers').scrollIntoView()">See the stack</button>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hero-panel-row">
+        <span class="hero-panel-label">Detection concept</span>
+        <span class="hero-panel-value">EIS</span>
+      </div>
+      <div class="hero-panel-row">
+        <span class="hero-panel-label">Filtration stages</span>
+        <span class="hero-panel-value">07</span>
+      </div>
+      <div class="hero-panel-row">
+        <span class="hero-panel-label">Target removal</span>
+        <span class="hero-panel-value">80–85%</span>
+      </div>
+      <div class="hero-panel-row">
+        <span class="hero-panel-label">Validation status</span>
+        <span class="hero-panel-value">Pre-lab</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="simulator">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="index-tag">01 / SIMULATION</span>
+        <h2>Set a source, watch it filter</h2>
+        <p>Choose a starting contamination level and step through the filtration process in real time.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="sim-grid">
+        <div>
+          <div class="control-block">
+            <label>Water source</label>
+            <select id="waterSource">
+              <option value="94">Bottled water</option>
+              <option value="5">Tap water</option>
+              <option value="120">Highly contaminated water</option>
+              <option value="50">Moderately contaminated water</option>
+            </select>
+          </div>
+          <div class="control-block">
+            <label>Initial microplastic level (particles/L)</label>
+            <input type="number" id="initialValue" value="94" min="1" max="500">
+          </div>
+          <div class="btn-row">
+            <button class="btn-sm btn-start" onclick="startSimulation()">Start</button>
+            <button class="btn-sm btn-pause" onclick="pauseSimulation()">Pause</button>
+            <button class="btn-sm btn-reset" onclick="resetSimulation()">Reset</button>
+          </div>
+        </div>
+
+        <div class="readout-col">
+          <div class="gauge-wrap">
+            <svg viewBox="0 0 160 160">
+              <defs>
+                <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#1FC9A8"/>
+                  <stop offset="100%" stop-color="#4FC3E8"/>
+                </linearGradient>
+              </defs>
+              <circle class="gauge-track" cx="80" cy="80" r="70"/>
+              <circle class="gauge-fill" id="gaugeFill" cx="80" cy="80" r="70"/>
+            </svg>
+            <div class="gauge-center">
+              <span class="gauge-number" id="removalDisplay">0%</span>
+              <span class="gauge-caption">estimated<br>removal</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="tank-shell" id="tank">
+              <div class="tank-water"></div>
+            </div>
+            <div class="tank-caption">
+              <span><span class="dot"></span>microplastic particles</span>
+              <span class="mono"><span id="remainingDisplay">94</span> particles/L remaining</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:22px;">
+      Simulation note — values shown here are illustrative estimates for demonstration purposes, not laboratory-validated removal measurements.
+    </div>
+  </div>
+</section>
+
+<section id="layers">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="index-tag">02 / STACK</span>
+        <h2>The seven-stage cartridge</h2>
+        <p>Water moves through each stage in order. Tap a stage for detail.</p>
+      </div>
+    </div>
+
+    <div class="schematic" id="schematic"></div>
+  </div>
+</section>
+
+<section id="metrics">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="index-tag">03 / RESULTS</span>
+        <h2>Before and after</h2>
+        <p>Live figures update as the simulation runs.</p>
+      </div>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-feature">
+        <div>
+          <div class="num" id="afterNumber">94</div>
+          <div class="metric-label">Estimated particles/L after filtration</div>
+        </div>
+        <div>
+          <div class="bar-track"><div class="bar-fill" id="progressBar"></div></div>
+          <div class="metric-label" style="margin-top:10px;">Target range: 80–85% removal</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="num" id="beforeNumber">94</div>
+        <div class="metric-label">Particles/L before filtration</div>
+      </div>
+      <div class="metric-card">
+        <div class="num" id="initialDisplay">94</div>
+        <div class="metric-label">Selected initial level</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="specs">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="index-tag">04 / SPECIFICATION</span>
+        <h2>Technical summary</h2>
+      </div>
+    </div>
+
+    <div class="spec-sheet">
+      <div class="spec-row">
+        <div class="spec-key">DETECTION</div>
+        <div class="spec-val">Electrochemical Impedance Spectroscopy (EIS) — proposed concept for tracking particle concentration.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">MATERIALS</div>
+        <div class="spec-val">
+          <ul>
+            <li>Mesh</li>
+            <li>Activated carbon (×2 stages)</li>
+            <li>Coconut fiber</li>
+            <li>Cotton + AISI 5052 aluminum alloy</li>
+            <li>Vetiver root</li>
+            <li>Zeolite stone</li>
+          </ul>
+        </div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">TARGET</div>
+        <div class="spec-val">Approximately 80–85% microplastic removal, subject to experimental validation.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">STATUS</div>
+        <div class="spec-val">Concept and simulation stage — not yet lab-tested or certified.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="impact">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="index-tag">05 / IMPACT</span>
+        <h2>Where this fits</h2>
+        <p>PureFlow explores an affordable, accessible approach to reducing microplastic contamination in drinking water.</p>
+      </div>
+    </div>
+
+    <div class="sdg-row">
+      <div class="sdg-chip"><span class="sdg-num" style="background:#4CC9A6;">03</span><span>Good health and well-being</span></div>
+      <div class="sdg-chip"><span class="sdg-num" style="background:#4FC3E8;">06</span><span>Clean water and sanitation</span></div>
+      <div class="sdg-chip"><span class="sdg-num" style="background:#1F8ECF;">14</span><span>Life below water</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap" style="padding-top:40px;">
+  <div class="note">
+    Demonstration disclaimer — this page is a digital demonstration of the proposed filtration concept. Simulated particle reduction values are not a substitute for laboratory testing, EIS measurements, or certified water-quality analysis.
+  </div>
+</div>
+
+<footer class="wrap">
+  <span>PureFlow — Smart Microplastic Filtration Concept</span>
+  <span>© 2025</span>
+</footer>
+
+<div class="modal" id="layerModal">
+  <div class="modal-card">
+    <span class="modal-close" onclick="closeLayer()">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
