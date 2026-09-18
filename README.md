@@ -1,47 +1,56 @@
 # PureFlow — Smart Microplastic Filtration Simulator
 
-A static, single-page demonstrator for the PureFlow multilayer water filtration concept: a 7-stage filter cartridge, a live particle-removal simulator, and a technical spec sheet.
+PureFlow is a browser-based concept demonstrator for a proposed multilayer filtration cartridge designed to explore microplastic reduction in drinking water.
 
-## Files
+## What it demonstrates
+
+- Seven-stage filtration concept
+- Interactive source and contamination controls
+- Step-by-step particle-removal simulation
+- Live estimated removal and remaining-particle readouts
+- Technical specification and material overview
+- Filtration-stack visualization
+- Environmental-impact presentation
+
+## Technical approach
+
+The prototype runs as plain HTML, CSS, and JavaScript with no build system or application dependencies.
 
 ```
-index.html   structure and content
-style.css    styling (dark instrument-panel theme)
-script.js    simulation logic and interactivity
+User controls
+     ↓
+Simulation logic
+     ↓
+Filtration-stage model
+     ↓
+Live metrics + visualization
 ```
-
-No build step, no dependencies to install — it's plain HTML/CSS/JS. The only external resource is the Google Fonts stylesheet loaded in `index.html`.
 
 ## Run locally
 
-Just open `index.html` in a browser, or serve it:
+Open `index.html` in a browser, or serve the folder with:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-then visit `http://localhost:8000`.
+Then open `http://localhost:8000`.
 
-## Deploy with GitHub Pages
+## Project status
 
-1. Push this folder to a GitHub repository (see commands below).
-2. On GitHub, go to **Settings → Pages**.
-3. Under **Build and deployment**, set **Source** to `Deploy from a branch`.
-4. Choose the `main` branch and `/ (root)` folder, then **Save**.
-5. GitHub will publish the site at `https://<your-username>.github.io/<repo-name>/` within a minute or two.
+**Concept / simulation prototype.**
 
-### Push to a new repo
+The particle-removal values shown by the interface are illustrative estimates. They are not laboratory measurements, certified water-quality results, or evidence of real-world filtration performance.
 
-```bash
-cd pureflow
-git init
-git add .
-git commit -m "PureFlow simulator"
-git branch -M main
-git remote add origin https://github.com/<your-username>/<repo-name>.git
-git push -u origin main
-```
+## Engineering focus
 
-## Notes
+- Interactive scientific communication
+- Simulation-oriented UI design
+- Environmental technology concepts
+- Frontend visualization
+- Prototype validation thinking
 
-The simulation values are illustrative estimates for demonstration purposes only, not laboratory-validated measurements — see the in-page disclaimer.
+## Author
+
+**Hemanth Sanjay**  
+AI & Data Science | AI/ML | Software Engineering
